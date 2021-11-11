@@ -33,7 +33,10 @@ model = cv2.dnn_DetectionModel(net)
 #model.setInputParams(size=(416, 416), scale=1/255, swapRB=True)
 model.setInputParams(size=(416, 416), scale=1/float(255.0), swapRB=True) #float is important for Python version 2!!!
 
-avg_FPS=0; count=0; total_fps=0;
+avg_FPS=0
+count=0
+total_fps=0
+
 while cv2.waitKey(1) < 1:
     (grabbed, frame) = vc.read()
     if not grabbed:
@@ -43,7 +46,8 @@ while cv2.waitKey(1) < 1:
     end = time.time()
 
     FPS = 1 / (end - start)
-    total_fps = total_fps + FPS; count=count+1;
+    total_fps += FPS
+    count+=1
     avg_FPS = total_fps / float(count)
 
     start_drawing = time.time()
