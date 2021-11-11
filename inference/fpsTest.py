@@ -10,18 +10,16 @@ class_names = []
 with open("models/coco.names", "r") as f:
     class_names = [cname.strip() for cname in f.readlines()]
 
-#vc = cv2.VideoCapture('rtsp://admin:admin123456@192.168.1.12:554')
+#vc = cv2.VideoCapture('rtsp://username:password@###.###.#.##:###') # for used with IP camera through rtsp protocol
 vc = cv2.VideoCapture('test.mp4')
 
-#net = cv2.dnn.readNet("models/yolov4.weights", "models/yolov4.cfg")
+#net = cv2.dnn.readNet("models/yolov4.weights", "models/yolov4.cfg") #for used with full sized yolov4 model (not included in models)
 net = cv2.dnn.readNet("models/yolov4-tiny.weights", "models/yolov4-tiny.cfg")
 
-net.setPreferableBackend(cv2.dnn.DNN_BACKEND_CUDA) #must be enabled for GPU
-   ### Either DNN_TARGET_CUDA_FP16 or DNN_TARGET_CUDA must be enabled for GPU
-   ### DNN_TARGET_CUDA shows better perf. (default for most CNN)
-   ### DNN_TARGET_CUDA_FP16 shows faster, but only supported for recent GPUs
-#net.setPreferableTarget(cv2.dnn.DNN_TARGET_CUDA_FP16) 
+net.setPreferableBackend(cv2.dnn.DNN_BACKEND_CUDA) #must be enabled for GPU 
 net.setPreferableTarget(cv2.dnn.DNN_TARGET_CUDA)
+#net.setPreferableTarget(cv2.dnn.DNN_TARGET_CUDA_FP16) #enable this preferable target option with enabled GPU for reduced latency at a slight cost of accuracy
+#to really crank up the power, open jtop in terminal and enable jetson clocks (I have recorded 80 fps inference with it enabled)
 
 #net.setPreferableBackend(cv2.dnn.DNN_BACKEND_OPENCV) #must be enabled for CPU
 #net.setPreferableTarget(cv2.dnn.DNN_TARGET_CPU) #must be enabled for CPU
